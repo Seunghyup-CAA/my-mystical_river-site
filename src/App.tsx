@@ -23,6 +23,8 @@ export default function MyMysticalRiverWebsite() {
   const [koSrc, setKoSrc] = useState(coverKo);
   const [enSrc, setEnSrc] = useState(coverEn);
   const [authorSrc, setAuthorSrc] = useState(authorImg);
+  const [showBookMore, setShowBookMore] = useState(false);
+  const [showAuthorMore, setShowAuthorMore] = useState(false);
   const isKo = lang === "ko";
 
   const t = isKo
@@ -73,8 +75,14 @@ export default function MyMysticalRiverWebsite() {
           "애필로그",
         ],
         author: "작가 소개",
+        readMore: "자세히 보기",
+        closeMore: "접기",
+        bookMore:
+          "이 책은 병상 일기에서 출발하지만 단순한 투병 기록에 머물지 않습니다. 유년의 강가 기억, 가족의 서사, 타국에서의 노동과 신앙, 삶과 죽음에 대한 성찰이 층층이 쌓이며 한 인간의 시간을 전체적으로 조망하게 합니다.",
         authorBody:
           "1945년 경남 진주 출생. 1977년 미국으로 이민하여 국제무역 사업을 전개했습니다. 마라톤 러너이자 월남전 참전용사, 천주교 신자로 살아왔으며 고향과 미국에서의 시간, 인간과 삶에 대한 성찰이 이 책의 바탕을 이룹니다.",
+        authorMore:
+          "작가는 진주에서의 어린 시절 기억과 미국 이민 이후의 긴 세월을 하나의 서사로 엮어 왔습니다. 사업가이면서도 문학과 신앙의 길을 놓지 않았고, 병상에서의 기록을 통해 삶 전체를 더 깊고 고요하게 성찰하는 글쓰기를 이어 왔습니다.",
       }
     : {
         badge: "Autobiographical Memoir",
@@ -124,8 +132,14 @@ export default function MyMysticalRiverWebsite() {
           "Proofreader's Note: A Note from the Proofreader",
         ],
         author: "About the Author",
+        readMore: "Read More",
+        closeMore: "Show Less",
+        bookMore:
+          "Although the book begins with notes written in a hospital bed, it grows into far more than an illness narrative. Childhood memories by the river, family history, immigrant life, labor, faith, suffering, and gratitude are woven together into a single life story.",
         authorBody:
           "Born in Jinju, Korea, in 1945, Soon Wan Hong immigrated to the United States in 1977 and built a career in international trade. A marathon runner, Vietnam War veteran, and Catholic believer, he has carried a lifelong reflection on homeland, America, faith, and the meaning of human life.",
+        authorMore:
+          "Hong has sought to weave his memories of Jinju and his long years in America into one continuous narrative. Alongside his work in business, he remained committed to literature and faith, and his writing has matured into a calm reflection on an entire life.",
       };
 
   const amazonLink = isKo
@@ -195,14 +209,26 @@ export default function MyMysticalRiverWebsite() {
           <div>
             <h2 className="text-3xl font-bold">{t.about}</h2>
             <p className="mt-4 leading-8 text-slate-700">{t.aboutShort}</p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href={amazonLink} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-black px-5 py-3 text-center font-bold text-white">
                 {t.buy}
               </a>
               <a href="mailto:seunghyuplee@hotmail.com" className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-center font-bold text-slate-900">
                 {t.contact}
               </a>
+              <button
+                type="button"
+                onClick={() => setShowBookMore((v) => !v)}
+                className="rounded-xl border border-slate-300 bg-slate-50 px-5 py-3 text-center font-bold text-slate-900"
+              >
+                {showBookMore ? t.closeMore : t.readMore}
+              </button>
             </div>
+            {showBookMore && (
+              <div className="mt-5 rounded-2xl bg-slate-50 p-5 leading-8 text-slate-700">
+                {t.bookMore}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -260,6 +286,20 @@ export default function MyMysticalRiverWebsite() {
             </div>
             <div>
               <p className="leading-8 text-slate-700">{t.authorBody}</p>
+              <div className="mt-5">
+                <button
+                  type="button"
+                  onClick={() => setShowAuthorMore((v) => !v)}
+                  className="rounded-xl border border-slate-300 bg-slate-50 px-5 py-3 font-bold text-slate-900"
+                >
+                  {showAuthorMore ? t.closeMore : t.readMore}
+                </button>
+              </div>
+              {showAuthorMore && (
+                <div className="mt-5 rounded-2xl bg-slate-50 p-5 leading-8 text-slate-700">
+                  {t.authorMore}
+                </div>
+              )}
             </div>
           </div>
         </div>
